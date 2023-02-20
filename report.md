@@ -6,20 +6,19 @@ has to be delivered in a standard, cross-platform format.
 
 ## Project
 
-Name:
+Name: TheAlgorithms/JavaScript
 
-URL:
+URL: https://github.com/DD2480-Group-23-2/JavaScript
 
-One or two sentences describing it
+The project is a library of algorithms and data structures implemented in JavaScript.
 
 ## Onboarding experience
 
-Did it build and run as documented?
-    
-See the assignment for details; if everything works out of the box,
-there is no need to write much here. If the first project(s) you picked
-ended up being unsuitable, you can describe the "onboarding experience"
-for each project, along with reason(s) why you changed to a different one.
+### Images-to-PDF
+For this project we had to install Android Studio in order to build the project. Android Studio is thoroughly documented and the project could be built without errors. The program could then be run smoothly on a simulated mobile device. In the end we decided not to continue with this project because the testing would require a lot of extra steps. Since it was a mobile application, work-arounds would be required to test on-click functions to name one example.
+
+### TheAlgorithms/JavaScript
+We decided to continue with this project. The project is a library of functions and data structures, so no building was required. However in order to run the JavaScript code, an interpreter such as Node.js was needed. Furthermore, the entire test suite for the project completed in 24 seconds without error. 
 
 
 ## Complexity
