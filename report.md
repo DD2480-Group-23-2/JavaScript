@@ -58,7 +58,7 @@ if anything googling information about it was a little inconvinient since the na
 link to branch: here
 git command to obtain the patch:
 
-We trach all the branches in the five most complex functions through a map that sees which branches were reached and then puts that information into a file.
+We trach all the branches in the five most complex functions through a map that sees which branches were reached and then puts that information into the terminal.
 The way we track each branch is through the unique number we assigned them which is listen in [this document](Assignment3.md)
 
 Tool is quite accurate and will portray the branches taken well and will have a readable output file. 
