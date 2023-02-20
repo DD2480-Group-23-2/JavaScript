@@ -20,7 +20,7 @@ test('Should return 0 since the interval is between the same numbers', () => {
   expect(Number(result)).toBe(0)
 })
 
-test('Should return 0 since the interval is between the same numbers', () => {
+test('Should return a error since N is too small', () => {
   const result = integralEvaluation(0, 5, 5, (x) => { return Math.log(x) + Math.PI * Math.pow(x, 3) })
   expect(Number(result)).toThrow(new Error('N has to be >= 2'))
 })
