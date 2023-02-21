@@ -1,7 +1,31 @@
-### function 1   .\Cellular-Automata\ConwaysGameOfLife.js
+# Functions
+
+## Function 1 - [`newGeneration`](../Cellular-Automata/ConwaysGameOfLife.js)
+
+### Cyclomatic Complexity
+
+20
+
+### Parameters
+
+A two dimensional array of integers.
+
+### Return
+
+A two dimensional array of integers representing the next step in the game.
+
+### Purpose
+
+Generates the next generation for a given state of Conway's Game of Life.
+
+### Reasons of complexity
+
+The function is for generating next generation of Conway's Game of Life. It accepts an array and also returns an array. Besides, there are nested loop and many branch statements within the function, which significantly increases the cyclomatic complexity.
+
+### Code
 
 ```js
-export function newGeneration (cells) {
+export function newGeneration(cells) {
   const nextGeneration = []
   for (let i = 0; i < cells.length; i++) {
     const nextGenerationRow = []
@@ -10,16 +34,21 @@ export function newGeneration (cells) {
       let neighbourCount = 0
       if (i > 0 && j > 0) neighbourCount += cells[i - 1][j - 1]
       if (i > 0) neighbourCount += cells[i - 1][j]
-      if (i > 0 && j < cells[i].length - 1) neighbourCount += cells[i - 1][j + 1]
+      if (i > 0 && j < cells[i].length - 1)
+        neighbourCount += cells[i - 1][j + 1]
       if (j > 0) neighbourCount += cells[i][j - 1]
       if (j < cells[i].length - 1) neighbourCount += cells[i][j + 1]
       if (i < cells.length - 1 && j > 0) neighbourCount += cells[i + 1][j - 1]
       if (i < cells.length - 1) neighbourCount += cells[i + 1][j]
-      if (i < cells.length - 1 && j < cells[i].length - 1) neighbourCount += cells[i + 1][j + 1]
+      if (i < cells.length - 1 && j < cells[i].length - 1)
+        neighbourCount += cells[i + 1][j + 1]
 
       // Decide whether the cell is alive or dead
       const alive = cells[i][j] === 1
-      if ((alive && neighbourCount >= 2 && neighbourCount <= 3) || (!alive && neighbourCount === 3)) {
+      if (
+        (alive && neighbourCount >= 2 && neighbourCount <= 3) ||
+        (!alive && neighbourCount === 3)
+      ) {
         nextGenerationRow.push(1)
       } else {
         nextGenerationRow.push(0)
@@ -29,35 +58,35 @@ export function newGeneration (cells) {
   }
   return nextGeneration
 }
-
 ```
 
+## Function 2 - [`caesarCipherEncodeAndDecodeEngine`](../Ciphers/KeyFinder.js)
 
+### Cyclomatic Complexity
 
-- CC: 20
+26
 
-- Parameters(1)
+### Parameters
 
-  * cells(array)
+str (get the input of encrypted string)
 
-- Return
+### Return
 
-  nextGeneration(array)
+the key number if founded
 
-- Purpose 
+### Purpose
 
-  Generates the next generation for a given state of Conway's Game of Life.
+Find and retrieve the encryption key automatically
 
-- Reasons of complexity
+### Reasons of complexity
 
-  The function is for generating next generation of Conway's Game of Life. It accepts an array and also returns an array. Besides, there are nested loop and many branch statements within the function, which significantly increases the cyclomatic complexity.
+The function has nested loops and uses an auxiliary function which has a lot more branch statements. Both of them cause a high CC.
 
-
-
-### function 2  .\Ciphers\KeyFinder.js
+### Code
 
 ```js
-function keyFinder (str) { // str is used to get the input of encrypted string
+function keyFinder(str) {
+  // str is used to get the input of encrypted string
   const wordBank = [
     'I ',
     'You ',
@@ -82,13 +111,15 @@ function keyFinder (str) { // str is used to get the input of encrypted string
     ' may ',
     'May ',
     ' be ',
-    'Be ']
+    'Be '
+  ]
   // let wordbankelementCounter = 0;
   // let key = 0; // return zero means the key can not be found
   const inStr = str.toString() // convert the input to String
   let outStr = '' // store the output value
   let outStrElement = '' // temporary store the word inside the outStr, it is used for comparison
-  for (let k = 0; k < 26; k++) { // try the number of key shifted, the sum of character from a-z or A-Z is 26
+  for (let k = 0; k < 26; k++) {
+    // try the number of key shifted, the sum of character from a-z or A-Z is 26
     outStr = caesarCipherEncodeAndDecodeEngine(inStr, k) // use the encryption engine to decrypt the input string
 
     // loop through the whole input string
@@ -112,7 +143,7 @@ function keyFinder (str) { // str is used to get the input of encrypted string
 }
 
 /* this sub-function is used to assist the keyFinder to find the key */
-function caesarCipherEncodeAndDecodeEngine (inStr, numShifted) {
+function caesarCipherEncodeAndDecodeEngine(inStr, numShifted) {
   const shiftNum = numShifted
   let charCode = 0
   let outStr = ''
@@ -124,7 +155,7 @@ function caesarCipherEncodeAndDecodeEngine (inStr, numShifted) {
     shiftedCharCode = charCode + shiftNum
     result = charCode
 
-    if ((charCode >= 48 && charCode <= 57)) {
+    if (charCode >= 48 && charCode <= 57) {
       if (shiftedCharCode < 48) {
         let diff = Math.abs(48 - 1 - shiftedCharCode) % 10
 
@@ -150,11 +181,11 @@ function caesarCipherEncodeAndDecodeEngine (inStr, numShifted) {
 
         result = shiftedCharCode
       }
-    } else if ((charCode >= 65 && charCode <= 90)) {
+    } else if (charCode >= 65 && charCode <= 90) {
       if (shiftedCharCode <= 64) {
         let diff = Math.abs(65 - 1 - shiftedCharCode) % 26
 
-        while ((diff % 26) >= 26) {
+        while (diff % 26 >= 26) {
           diff = diff % 26
         }
         shiftedCharCode = 90 - diff
@@ -164,17 +195,17 @@ function caesarCipherEncodeAndDecodeEngine (inStr, numShifted) {
       } else if (shiftedCharCode > 90) {
         let diff = Math.abs(shiftedCharCode - 1 - 90) % 26
 
-        while ((diff % 26) >= 26) {
+        while (diff % 26 >= 26) {
           diff = diff % 26
         }
         shiftedCharCode = 65 + diff
         result = shiftedCharCode
       }
-    } else if ((charCode >= 97 && charCode <= 122)) {
+    } else if (charCode >= 97 && charCode <= 122) {
       if (shiftedCharCode <= 96) {
         let diff = Math.abs(97 - 1 - shiftedCharCode) % 26
 
-        while ((diff % 26) >= 26) {
+        while (diff % 26 >= 26) {
           diff = diff % 26
         }
         shiftedCharCode = 122 - diff
@@ -184,7 +215,7 @@ function caesarCipherEncodeAndDecodeEngine (inStr, numShifted) {
       } else if (shiftedCharCode > 122) {
         let diff = Math.abs(shiftedCharCode - 1 - 122) % 26
 
-        while ((diff % 26) >= 26) {
+        while (diff % 26 >= 26) {
           diff = diff % 26
         }
         shiftedCharCode = 97 + diff
@@ -197,33 +228,9 @@ function caesarCipherEncodeAndDecodeEngine (inStr, numShifted) {
 }
 
 export { keyFinder }
-
-
 ```
 
-
-
-- CC: 26
-
-- Parameters(1)
-
-  * str (get the input of encrypted string)
-
-- Return
-
-  the key number if founded
-
-- Purpose 
-
-  Find and retrieve the encryption key automatically
-
-- Reasons of complexity
-
-  The function has nested loops and uses an auxiliary function which has a lot more branch statements. Both of them cause a high CC.
-
-
-
-### function 3   .\Conversions\BinaryToHex.js
+## function 3 .\Conversions\BinaryToHex.js
 
 ```js
 const pad = (num, padlen) => {
@@ -237,22 +244,38 @@ const hexLookup = (bin) => {
     binary = pad(binary, 4)
   }
   switch (binary) {
-    case '0000': return '0'
-    case '0001': return '1'
-    case '0010': return '2'
-    case '0011': return '3'
-    case '0100': return '4'
-    case '0101': return '5'
-    case '0110': return '6'
-    case '0111': return '7'
-    case '1000': return '8'
-    case '1001': return '9'
-    case '1010': return 'A'
-    case '1011': return 'B'
-    case '1100': return 'C'
-    case '1101': return 'D'
-    case '1110': return 'E'
-    case '1111': return 'F'
+    case '0000':
+      return '0'
+    case '0001':
+      return '1'
+    case '0010':
+      return '2'
+    case '0011':
+      return '3'
+    case '0100':
+      return '4'
+    case '0101':
+      return '5'
+    case '0110':
+      return '6'
+    case '0111':
+      return '7'
+    case '1000':
+      return '8'
+    case '1001':
+      return '9'
+    case '1010':
+      return 'A'
+    case '1011':
+      return 'B'
+    case '1100':
+      return 'C'
+    case '1101':
+      return 'D'
+    case '1110':
+      return 'E'
+    case '1111':
+      return 'F'
   }
 }
 const binaryToHex = (binaryString) => {
@@ -285,22 +308,19 @@ const binaryToHex = (binaryString) => {
 }
 
 export default binaryToHex
-
 ```
-
-
 
 - CC: 18
 
 - Parameters(1)
 
-  * binaryString
+  - binaryString
 
 - Return
 
   hex number(in array)
 
-- Purpose 
+- Purpose
 
   Function for converting Binary to Hex
 
@@ -308,12 +328,10 @@ export default binaryToHex
 
   The function has a switch statement block for converting binary to hex which creates many branches and thus increases complexity.
 
-
-
-### function 4   .\Data-Structures\Tree\Trie.js
+## function 4 .\Data-Structures\Tree\Trie.js
 
 ```js
-const TrieNode = function TrieNode (key, parent) {
+const TrieNode = function TrieNode(key, parent) {
   this.key = key
   this.count = 0
   this.children = Object.create(null)
@@ -324,7 +342,7 @@ const TrieNode = function TrieNode (key, parent) {
   }
 }
 
-function Trie () {
+function Trie() {
   // create only root with null key and parent
   this.root = new TrieNode(null, null)
 }
@@ -333,7 +351,9 @@ function Trie () {
 Trie.findAllWords = function (root, word, output) {
   if (root === null) return
   if (root.count > 0) {
-    if (typeof output === 'object') { output.push({ word, count: root.count }) }
+    if (typeof output === 'object') {
+      output.push({ word, count: root.count })
+    }
   }
   let key
   for (key in root.children) {
@@ -353,7 +373,9 @@ Trie.prototype.insert = function (word) {
   const len = word.length
   let i
   for (i = 0; i < len; i++) {
-    if (node.children[word.charAt(i)] === undefined) { node.children[word.charAt(i)] = new TrieNode(word.charAt(i), node) }
+    if (node.children[word.charAt(i)] === undefined) {
+      node.children[word.charAt(i)] = new TrieNode(word.charAt(i), node)
+    }
     node = node.children[word.charAt(i)]
   }
   node.count += 1
@@ -402,7 +424,11 @@ Trie.prototype.remove = function (word, count) {
   // if the object forms some other objects prefix we don't delete it
   // For checking an empty object
   // https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
-  if (child.count <= 0 && (Object.keys(child.children).length && child.children.constructor === Object)) {
+  if (
+    child.count <= 0 &&
+    Object.keys(child.children).length &&
+    child.children.constructor === Object
+  ) {
     child.parent.children[child.key] = undefined
   }
 }
@@ -434,10 +460,7 @@ Trie.prototype.findOccurrences = function (word) {
 }
 
 export { Trie }
-
 ```
-
-
 
 - CC: 12
 
@@ -445,20 +468,18 @@ export { Trie }
 
 - An implementation of data structure trie.
 
-- Purpose 
+- Purpose
 
-  Trie is a type of k-ary search tree, a tree data structure used for locating specific keys from within a set. 
+  Trie is a type of k-ary search tree, a tree data structure used for locating specific keys from within a set.
 
 - Reasons of complexity
 
   Such data structure needs many loops and branch statements to ensure the correctness of adding, updating and retrieving, which also lead to the high complexity.
 
-
-
-### function 5   .\Dynamic-Programming\MaxProductOfThree.js
+## function 5 .\Dynamic-Programming\MaxProductOfThree.js
 
 ```js
-export function maxProductOfThree (arrayItems) {
+export function maxProductOfThree(arrayItems) {
   // if size is less than 3, no triplet exists
   const n = arrayItems.length
   if (n < 3) throw new Error('Triplet cannot exist with the given array')
@@ -489,16 +510,13 @@ export function maxProductOfThree (arrayItems) {
   const prod2 = max1 * min1 * min2
   return Math.max(prod1, prod2)
 }
-
 ```
-
-
 
 - CC: 11
 
 - Parameters(1)
 
-  * {number[]} arrayItems
+  - {number[]} arrayItems
 
 - Return
 
@@ -506,22 +524,22 @@ export function maxProductOfThree (arrayItems) {
 
 - Purpose
 
-   Given an array of numbers, return the maximum product of 3 numbers from the array
+  Given an array of numbers, return the maximum product of 3 numbers from the array
 
 - Reasons of complexity
 
   Also, there are many conditional statements in one loop, which is unavoidable for finding 3 largest values and 2 smallest values.
 
-### function 6   .\Geometry\ConvexHullGraham.js
+## function 6 .\Geometry\ConvexHullGraham.js
 
 ```js
-function compare (a, b) {
+function compare(a, b) {
   // Compare Function to Sort the points, a and b are points to compare
   if (a.x < b.x) return -1
   if (a.x === b.x && a.y < b.y) return -1
   return 1
 }
-function orientation (a, b, c) {
+function orientation(a, b, c) {
   // Check orientation of Line(a,b) and Line(b,c)
   const alpha = (b.y - a.y) / (b.x - a.x)
   const beta = (c.y - b.y) / (c.x - b.x)
@@ -534,17 +552,19 @@ function orientation (a, b, c) {
   return 0
 }
 
-function convexHull (points) {
+function convexHull(points) {
   const pointsLen = points.length
   if (pointsLen <= 2) {
     throw new Error('Minimum of 3 points is required to form closed polygon!')
   }
 
   points.sort(compare)
-  const p1 = points[0]; const p2 = points[pointsLen - 1]
+  const p1 = points[0]
+  const p2 = points[pointsLen - 1]
 
   // Divide Hull in two halves
-  const upperPoints = []; const lowerPoints = []
+  const upperPoints = []
+  const lowerPoints = []
 
   upperPoints.push(p1)
   lowerPoints.push(p1)
@@ -553,7 +573,14 @@ function convexHull (points) {
     if (i === pointsLen - 1 || orientation(p1, points[i], p2) !== -1) {
       let upLen = upperPoints.length
 
-      while (upLen >= 2 && orientation(upperPoints[upLen - 2], upperPoints[upLen - 1], points[i]) === -1) {
+      while (
+        upLen >= 2 &&
+        orientation(
+          upperPoints[upLen - 2],
+          upperPoints[upLen - 1],
+          points[i]
+        ) === -1
+      ) {
         upperPoints.pop()
         upLen = upperPoints.length
       }
@@ -561,7 +588,14 @@ function convexHull (points) {
     }
     if (i === pointsLen - 1 || orientation(p1, points[i], p2) !== 1) {
       let lowLen = lowerPoints.length
-      while (lowLen >= 2 && orientation(lowerPoints[lowLen - 2], lowerPoints[lowLen - 1], points[i]) === 1) {
+      while (
+        lowLen >= 2 &&
+        orientation(
+          lowerPoints[lowLen - 2],
+          lowerPoints[lowLen - 1],
+          points[i]
+        ) === 1
+      ) {
         lowerPoints.pop()
         lowLen = lowerPoints.length
       }
@@ -580,19 +614,17 @@ function convexHull (points) {
 }
 ```
 
-
-
 - CC: 13
 
 - Parameters(1)
 
-  * Points(array)
+  - Points(array)
 
 - Return
 
   Convex hull of points(array)
 
-- Purpose 
+- Purpose
 
   Given a set of points in the plane. The Convex hull of the set is the smallest convex polygon that contains all the points of it.
 
@@ -600,41 +632,39 @@ function convexHull (points) {
 
   The function implements the Convex Hull algorithm, which needs to find the upper points and lower points of the polygon by calculating orientation of every sequence of three consecutive points. It creates loops and conditional statements and uses 2 auxiliary functions that higher complexity.
 
-
-
-### function 7   .\Graphs\PrimMST.js
+## function 7 .\Graphs\PrimMST.js
 
 ```js
 // Priority Queue Helper functions
-function getParentPosition (position) {
+function getParentPosition(position) {
   // Get the parent node of the current node
   return Math.floor((position - 1) / 2)
 }
-function getChildrenPosition (position) {
+function getChildrenPosition(position) {
   // Get the children nodes of the current node
   return [2 * position + 1, 2 * position + 2]
 }
 
 class PriorityQueue {
   // Priority Queue class using Minimum Binary Heap
-  constructor () {
+  constructor() {
     this._heap = []
     this.keys = {}
   }
 
-  isEmpty () {
+  isEmpty() {
     // Checking if the heap is empty
     return this._heap.length === 0
   }
 
-  push (key, priority) {
+  push(key, priority) {
     // Adding element to the queue (equivalent to add)
     this._heap.push([key, priority])
     this.keys[key] = this._heap.length - 1
     this._shiftUp(this.keys[key])
   }
 
-  pop () {
+  pop() {
     // Removing the element with least priority (equivalent to extractMin)
     this._swap(0, this._heap.length - 1)
     const [key] = this._heap.pop()
@@ -643,12 +673,12 @@ class PriorityQueue {
     return key
   }
 
-  contains (key) {
+  contains(key) {
     // Check if a given key is present in the queue
-    return (key in this.keys)
+    return key in this.keys
   }
 
-  update (key, priority) {
+  update(key, priority) {
     // Update the priority of the given element (equivalent to decreaseKey)
     const currPos = this.keys[key]
     this._heap[currPos][1] = priority
@@ -669,13 +699,15 @@ class PriorityQueue {
 
     if (parentPos >= 0 && parentPriority > currPriority) {
       this._shiftUp(currPos)
-    } else if (child2Pos < this._heap.length &&
-      (child1Priority < currPriority || child2Priority < currPriority)) {
+    } else if (
+      child2Pos < this._heap.length &&
+      (child1Priority < currPriority || child2Priority < currPriority)
+    ) {
       this._shiftDown(currPos)
     }
   }
 
-  _shiftUp (position) {
+  _shiftUp(position) {
     // Helper function to shift up a node to proper position (equivalent to bubbleUp)
     let currPos = position
     let parentPos = getParentPosition(currPos)
@@ -699,7 +731,7 @@ class PriorityQueue {
     this.keys[this._heap[currPos][0]] = currPos
   }
 
-  _shiftDown (position) {
+  _shiftDown(position) {
     // Helper function to shift down a node to proper position (equivalent to bubbleDown)
     let currPos = position
     let [child1Pos, child2Pos] = getChildrenPosition(currPos)
@@ -717,8 +749,10 @@ class PriorityQueue {
       return
     }
 
-    while (child2Pos < this._heap.length &&
-      (child1Priority < currPriority || child2Priority < currPriority)) {
+    while (
+      child2Pos < this._heap.length &&
+      (child1Priority < currPriority || child2Priority < currPriority)
+    ) {
       if (child1Priority < currPriority && child1Priority < child2Priority) {
         this._swap(child1Pos, currPos)
         currPos = child1Pos
@@ -726,11 +760,14 @@ class PriorityQueue {
         this._swap(child2Pos, currPos)
         currPos = child2Pos
       }
-      [child1Pos, child2Pos] = getChildrenPosition(currPos)
+      ;[child1Pos, child2Pos] = getChildrenPosition(currPos)
       try {
-        [child1Priority, child2Priority] = [this._heap[child1Pos][1], this._heap[child2Pos][1]]
+        ;[child1Priority, child2Priority] = [
+          this._heap[child1Pos][1],
+          this._heap[child2Pos][1]
+        ]
       } catch (error) {
-        [child1Priority, child2Priority] = [Infinity, Infinity]
+        ;[child1Priority, child2Priority] = [Infinity, Infinity]
       }
 
       currPriority = this._heap[currPos][1]
@@ -742,9 +779,12 @@ class PriorityQueue {
     }
   }
 
-  _swap (position1, position2) {
+  _swap(position1, position2) {
     // Helper function to swap 2 nodes
-    [this._heap[position1], this._heap[position2]] = [this._heap[position2], this._heap[position1]]
+    ;[this._heap[position1], this._heap[position2]] = [
+      this._heap[position2],
+      this._heap[position1]
+    ]
     this.keys[this._heap[position1][0]] = position1
     this.keys[this._heap[position2][0]] = position2
   }
@@ -752,24 +792,28 @@ class PriorityQueue {
 
 class GraphWeightedUndirectedAdjacencyList {
   // Weighted Undirected Graph class
-  constructor () {
+  constructor() {
     this.connections = {}
   }
 
-  addNode (node) {
+  addNode(node) {
     // Function to add a node to the graph (connection represented by set)
     this.connections[node] = {}
   }
 
-  addEdge (node1, node2, weight) {
+  addEdge(node1, node2, weight) {
     // Function to add an edge (adds the node too if they are not present in the graph)
-    if (!(node1 in this.connections)) { this.addNode(node1) }
-    if (!(node2 in this.connections)) { this.addNode(node2) }
+    if (!(node1 in this.connections)) {
+      this.addNode(node1)
+    }
+    if (!(node2 in this.connections)) {
+      this.addNode(node2)
+    }
     this.connections[node1][node2] = weight
     this.connections[node2][node1] = weight
   }
 
-  PrimMST (start) {
+  PrimMST(start) {
     // Prim's Algorithm to generate a Minimum Spanning Tree (MST) of a graph
     // Details: https://en.wikipedia.org/wiki/Prim%27s_algorithm
     const distance = {}
@@ -777,16 +821,21 @@ class GraphWeightedUndirectedAdjacencyList {
     const priorityQueue = new PriorityQueue()
     // Initialization
     for (const node in this.connections) {
-      distance[node] = (node === start.toString() ? 0 : Infinity)
+      distance[node] = node === start.toString() ? 0 : Infinity
       parent[node] = null
       priorityQueue.push(node, distance[node])
     }
     // Updating 'distance' object
     while (!priorityQueue.isEmpty()) {
       const node = priorityQueue.pop()
-      Object.keys(this.connections[node]).forEach(neighbour => {
-        if (priorityQueue.contains(neighbour) && distance[node] + this.connections[node][neighbour] < distance[neighbour]) {
-          distance[neighbour] = distance[node] + this.connections[node][neighbour]
+      Object.keys(this.connections[node]).forEach((neighbour) => {
+        if (
+          priorityQueue.contains(neighbour) &&
+          distance[node] + this.connections[node][neighbour] <
+            distance[neighbour]
+        ) {
+          distance[neighbour] =
+            distance[node] + this.connections[node][neighbour]
           parent[neighbour] = node
           priorityQueue.update(neighbour, distance[neighbour])
         }
@@ -795,7 +844,7 @@ class GraphWeightedUndirectedAdjacencyList {
 
     // MST Generation from the 'parent' object
     const graph = new GraphWeightedUndirectedAdjacencyList()
-    Object.keys(parent).forEach(node => {
+    Object.keys(parent).forEach((node) => {
       if (node && parent[node]) {
         graph.addEdge(node, parent[node], this.connections[node][parent[node]])
       }
@@ -803,38 +852,40 @@ class GraphWeightedUndirectedAdjacencyList {
     return graph
   }
 }
-
-
 ```
-
-
 
 - CC: 12
 
-- Purpose 
+- Purpose
 
-  The code implements PrimMST algorithm and creates two classes. One is to implement priority queue, the other is for storing edges  and vertex of the graph. The algorithm is intended to generate the lowest weighted tree from a given graph.
+  The code implements PrimMST algorithm and creates two classes. One is to implement priority queue, the other is for storing edges and vertex of the graph. The algorithm is intended to generate the lowest weighted tree from a given graph.
 
 - Reasons of complexity
 
   The primMST algorithm has to traverse priority queue and check if endpoint of the current edge is in the result graph, thus it has loops and conditional statements to achieve these goals and results in a high complexity.
 
-
-
-### function 8   .\Maths\SimpsonIntegration.js
+## function 8 .\Maths\SimpsonIntegration.js
 
 ```js
-function integralEvaluation (N, a, b, func) {
+function integralEvaluation(N, a, b, func) {
   // Check if N is an even integer
   let isNEven = true
   if (N % 2 !== 0) isNEven = false
 
-  if (!Number.isInteger(N) || Number.isNaN(a) || Number.isNaN(b)) { throw new TypeError('Expected integer N and finite a, b') }
-  if (!isNEven) { throw Error('N is not an even number') }
-  if (N <= 0) { throw Error('N has to be >= 2') }
+  if (!Number.isInteger(N) || Number.isNaN(a) || Number.isNaN(b)) {
+    throw new TypeError('Expected integer N and finite a, b')
+  }
+  if (!isNEven) {
+    throw Error('N is not an even number')
+  }
+  if (N <= 0) {
+    throw Error('N has to be >= 2')
+  }
 
   // Check if a < b
-  if (a > b) { throw Error('a must be less or equal than b') }
+  if (a > b) {
+    throw Error('a must be less or equal than b')
+  }
   if (a === b) return 0
 
   // Calculate the step h
@@ -862,27 +913,29 @@ function integralEvaluation (N, a, b, func) {
 
   result *= temp
 
-  if (Number.isNaN(result)) { throw Error("Result is NaN. The input interval doesn't belong to the functions domain") }
+  if (Number.isNaN(result)) {
+    throw Error(
+      "Result is NaN. The input interval doesn't belong to the functions domain"
+    )
+  }
 
   return result
 }
 ```
 
-
-
 - CC: 15
 
 - Parameters(4)
 
-  * N: the split number
-  * a,b: endpoints of interval
-  * func: math function used for integration
+  - N: the split number
+  - a,b: endpoints of interval
+  - func: math function used for integration
 
 - Return
 
   Integration result
 
-- Purpose 
+- Purpose
 
   Calculate Integration by implementing Simpson Integration method.
 
@@ -890,13 +943,12 @@ function integralEvaluation (N, a, b, func) {
 
   It adds many conditional statements for validity of this function in the beginning, which increases CC of the code.
 
-
-
-### function 9  .\Sorts\FlashSort.js
+## function 9 .\Sorts\FlashSort.js
 
 ```js
-export function flashSort (arr) {
-  let max = 0; let min = arr[0]
+export function flashSort(arr) {
+  let max = 0
+  let min = arr[0]
   const n = arr.length
   const m = ~~(0.45 * n)
   const l = new Array(m)
@@ -934,12 +986,14 @@ export function flashSort (arr) {
   arr[0] = hold
 
   // permutation
-  let move = 0; let t; let flash
+  let move = 0
+  let t
+  let flash
   let j = 0
   let k = m - 1
 
-  while (move < (n - 1)) {
-    while (j > (l[k] - 1)) {
+  while (move < n - 1) {
+    while (j > l[k] - 1) {
       ++j
       k = ~~(c1 * (arr[j] - min))
     }
@@ -947,7 +1001,7 @@ export function flashSort (arr) {
     flash = arr[j]
     while (j !== l[k]) {
       k = ~~(c1 * (flash - min))
-      hold = arr[t = --l[k]]
+      hold = arr[(t = --l[k])]
       arr[t] = flash
       flash = hold
       ++move
@@ -967,19 +1021,17 @@ export function flashSort (arr) {
 }
 ```
 
-
-
 - CC: 15
 
 - Parameters(1)
 
-  * arr
+  - arr
 
 - Return
 
   arr(after sorting)
 
-- Purpose 
+- Purpose
 
   Sort the array by flash sort algorithm.
 
@@ -987,9 +1039,7 @@ export function flashSort (arr) {
 
   The function has many loops because there are corresponding steps in the algorithm, so it affects CC.
 
-
-
-### function 10   .\String\ScrambleStrings.js
+## function 10 .\String\ScrambleStrings.js
 
 ```js
 const isScramble = (s1, s2) => {
@@ -1033,20 +1083,18 @@ const helper = function (dp, s1, s2) {
 }
 ```
 
-
-
 - CC: 13
 
 - Parameters(2)
 
-  * s1
-  * s2
+  - s1
+  - s2
 
 - Return
 
   if s2 is a scrambled string of s1
 
-- Purpose 
+- Purpose
 
   Given two strings s1 and s2 of the same length, return true if s2 is a scrambled string of s1, otherwise, return false. This code is for a problem on leetcode(87. Scramble String).
 
