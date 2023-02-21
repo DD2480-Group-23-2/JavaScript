@@ -565,9 +565,9 @@ function convexHull(points) {
 
   The primMST algorithm has to traverse priority queue and check if endpoint of the current edge is in the result graph, thus it has loops and conditional statements to achieve these goals and results in a high complexity.
 
-## [`maxProductOfThree`](../Dynamic-Programming/MaxProductOfThree.js)
+## [`maxProductOfThree`](../Dynamic-Programming/MaxProductOfThree.js#L8-L38)
 
-[code](https://github.com/DD2480-Group-23-2/JavaScript/blob/5ce828b3fe4e138c6da652bf03870e2c20e2f692/Dynamic-Programming/MaxProductOfThree.js#L1-L38)
+[code](https://github.com/DD2480-Group-23-2/JavaScript/blob/5ce828b3fe4e138c6da652bf03870e2c20e2f692/Dynamic-Programming/MaxProductOfThree.js#L8-L38)
 
 - CC: 11
 
