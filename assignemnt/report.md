@@ -15,11 +15,12 @@ The project is a library of algorithms and data structures implemented in JavaSc
 ## Onboarding experience
 
 ### Images-to-PDF
+
 For this project we had to install Android Studio in order to build the project. Android Studio is thoroughly documented and the project could be built without errors. The program could then be run smoothly on a simulated mobile device. In the end we decided not to continue with this project because the testing would require a lot of extra steps. Since it was a mobile application, work-arounds would be required to test on-click functions to name one example.
 
 ### TheAlgorithms/JavaScript
-We decided to continue with this project. The project is a library of functions and data structures, so no building was required. However in order to run the JavaScript code, an interpreter such as Node.js was needed. Furthermore, the entire test suite for the project completed in 24 seconds without error.
 
+We decided to continue with this project. The project is a library of functions and data structures, so no building was required. However in order to run the JavaScript code, an interpreter such as Node.js was needed. Furthermore, the entire test suite for the project completed in 24 seconds without error.
 
 ## Complexity
 
@@ -29,55 +30,62 @@ When counting manually we draw up the flow graph for the function and count the 
 Below follows a comparison between the complexity recorded by the lizard tool and a manual count for five of the ten most complex functions:
 
 ### Dynamic-Programming/MaxProductOfThree
-	-Counting with lizard: AvgCCN = 11
-	-Counting manually: CCN = 11
-	
+
+    -Counting with lizard: AvgCCN = 11
+    -Counting manually: CCN = 11
+
 This function has an initial if-statement that catches an error(n=1, e=2). We start with a for-loop(n=2, e =4), then we have an single if-statement followed by two if-else statements with one OR each(n=7, e=12). Then we have a final if-statement followed by an if-else-statement with an OR (n=10, e= 19). If we count the cyclomatic complexity using the formula CCN = E - N + 2 we get an CCN of 19 - 10 + 2 = 11.
 
 ### Strings/ScrambleStrings
-	-Counting with lizard: AvgCCN = 13
-	-Counting manually: CCN = 13
-	
+
+    -Counting with lizard: AvgCCN = 13
+    -Counting manually: CCN = 13
+
 This function starts with two inital if-statements followed by a for-loop(n=3,e=6). The for-loop has two if-statements(n=6, e=13). Then follows another for-loop with a single if-statement(n=8,e=19). Lastly we have another for-loop with a (OR) else (OR) statement (n=14, e=25). We use the same formula as in the function above and we get 25 - 14 + 2 = 13.
 
 ### Maths/SimpsonIntegration
-	-Counting with lizard: AvgCCN = 15
-	-Counting manually: CCN = 15
-	
-The function has 6 initial if-statements that have a direct path to an end node(n=6, e=12). Then comes a for-loop with 2 if-statements (n=9,e=18). Lastly we have a for-loop with no additional complexity followed by a final if-statement(n=11, e=24). The formula gives us CCN of  24 - 11 + 2 = 15.
+
+    -Counting with lizard: AvgCCN = 15
+    -Counting manually: CCN = 15
+
+The function has 6 initial if-statements that have a direct path to an end node(n=6, e=12). Then comes a for-loop with 2 if-statements (n=9,e=18). Lastly we have a for-loop with no additional complexity followed by a final if-statement(n=11, e=24). The formula gives us CCN of 24 - 11 + 2 = 15.
 
 ### Data-Structures/Tree/Trie
-	-Counting with lizard: AvgCCN = 12
-	-Counting manually: CCN = 12
-	
+
+    -Counting with lizard: AvgCCN = 12
+    -Counting manually: CCN = 12
+
 The function has 5 intial if-statements(n=5,e=10). One of the if-statements lead to an for-loop with a single if-statement(n=7, e=16). Lastly we have an if-statement that leads to two declarations and an if-statement that leads to a single declaration(n=9, e=19). The formula gives us a CCN of 19 - 9 + 2 = 12.
 
-
 ### Conversions/BinaryToHex
-	-Counting with lizard: AvgCCN = 18
-	-Counting manually CCN = 18
+
+    -Counting with lizard: AvgCCN = 18
+    -Counting manually CCN = 18
+
 The function starts with an if statement(n=1, e=2) then a switch case with 16 cases(n=2, e=18). The forumla gives us a CCN of 18 - 2 + 2 = 18.
 
 #### 2. Are the functions just complex, or also long?
 
-   Sometimes they are related but not always, like function *newGeneration* in *ConwaysGameOfLife.js* has around 30 lines of code but with CC of 20, mainly because of a bunch of conditional statements within the function.
+Sometimes they are related but not always, like function _newGeneration_ in _ConwaysGameOfLife.js_ has around 30 lines of code but with CC of 20, mainly because of a bunch of conditional statements within the function.
+
 #### 2. What is the purpose of the functions?
 
-   Those functions all implement some kind of algorithm to solve different kinds of problems and they are classified by different folders.
+Those functions all implement some kind of algorithm to solve different kinds of problems and they are classified by different folders.
 
 #### 3. Are exceptions taken into account in the given measurements?
 
-   There is no exception to catch in functions we measured, so we didn't take exceptions into account.
+There is no exception to catch in functions we measured, so we didn't take exceptions into account.
 
 #### 4. Is the documentation clear w.r.t. all the possible outcomes?
 
-   The documentation describes some of the possible outcomes, but still may miss some scenarios. The document can be improved by further detailed tests.
+The documentation describes some of the possible outcomes, but still may miss some scenarios. The document can be improved by further detailed tests.
 
 ## Refactoring
+
 **Plan for refactoring complex code:**
 there would not be huge differences to make with refactoring the code since a lot of it is broken down to as much as it could be.
-However, in *caesarCipherEncodeAndDecodeEngine* there are three larger cases that can occur depending on the paramaters, these could be broken down into three smaller functions.
-You could probably also create a helper function for the last part of the *intefralEvaluation*.
+However, in _caesarCipherEncodeAndDecodeEngine_ there are three larger cases that can occur depending on the paramaters, these could be broken down into three smaller functions.
+You could probably also create a helper function for the last part of the _intefralEvaluation_.
 The other top 5 functions are fairly optimized and there are not any good ways to refactor without sacraficing in other areas.
 
 **Estimated impact of refactoring (lower CC, but other drawbacks?)**
@@ -86,7 +94,6 @@ it would require more tests since a proper coverage would test each individual f
 ## Coverage
 
 ### Tools
-
 
 We used Lizard as a coverage tool to measure complexity.
 it was fairly simple and straitforward to use. Documentation was easily available and was clear in the steps that were needed in order to get the wanted view.
@@ -132,7 +139,9 @@ git diff ...
 Number of test cases added: two per team member (P) or at least four (P+).
 
 ## Self-assessment: Way of working
+
 We are currently in the "foundation established" state according to our evaluation. We have established the tools for work and communications (e.g., Git and Discord) and they are integrated into our workflow in order to perform our work. In order to fully reach the next state, "in use", we would need to regularly inspect our tools and practices. In addition, we would need to put procedures into place to handle feedback.
 
 ## Overall experience
+
 In this project we learned how to empirically measure software complexity, and how to refactor code into smaller functions in order to reduce said complexity. Some main takeaways are keeping complexity in mind while writing software, as well as writing tests in a more systematic way in order to achieve better coverage. Furthermore, we learned how about how to productively contribute to open-source projects which is an important skill.
