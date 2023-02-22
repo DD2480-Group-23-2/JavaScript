@@ -1,5 +1,7 @@
 # The Algorithms - JavaScript
 
+See [assignment/report.md](./assignment/report.md) for the report.
+
 [google docs link](https://docs.google.com/document/d/1ATn52wGKfP9WK6UnFX670RMKDjirGzvb-0VRBk1IZOs/edit?usp=sharing)
 
 
