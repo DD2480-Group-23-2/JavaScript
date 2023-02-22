@@ -14,4 +14,13 @@ describe('MaxProductOfThree', () => {
   it('expects to return 300 as the maximum product', () => {
     expect(maxProductOfThree([10, -6, 5, 3, 1, -10])).toBe(600)
   })
+
+  // max product works no matter the order
+  it('expects to return 24 as the maximum product', () => {
+    expect(maxProductOfThree([-1, 2, 3, 4])).toBe(24)
+  })
+
+  it('expects to return 24 as the maximum product', () => {
+    expect(maxProductOfThree([-1, 4, 3, 2])).toBe(24)
+  })
 })
