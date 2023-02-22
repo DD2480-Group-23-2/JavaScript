@@ -179,17 +179,192 @@ The coverage tool is consistent with `Jest` and covers the same lines.
 
 ## 6 Coverage improvement
 
-Show the comments that describe the requirements for the coverage.
+[Report of old coverage](./coverage-original.md)
 
-Report of old coverage: [link]
+[Report of new coverage](./coverage-improved.md)
 
-Report of new coverage: [link]
+### 6.1 [`hexLookup`](../Conversions/test/BinaryToHex.test.js)
 
-Test cases added:
+#### 6.1.1 Test cases added
 
-git diff ...
+The test cases added are are to ensure that all parts of the lookup functions are used.
 
-Number of test cases added: two per team member (P) or at least four (P+).
+#### 6.1.2 Git diff
+
+```sh
+git diff original-state Conversions/test/BinaryToHex.test.js
+```
+
+```diff
+diff --git a/Conversions/test/BinaryToHex.test.js b/Conversions/test/BinaryToHex.test.js
+index 85679bb..73c9c72 100644
+--- a/Conversions/test/BinaryToHex.test.js
++++ b/Conversions/test/BinaryToHex.test.js
+@@ -14,6 +14,18 @@ describe('BinaryToHex', () => {
+   })
+
+   it('expects to return correct hexadecimal value, matching (num).toString(16)', () => {
+-    expect(binaryToHex('1111')).toBe(parseInt('1111', 2).toString(16).toUpperCase())
++    expect(binaryToHex('1111')).toBe(
++      parseInt('1111', 2).toString(16).toUpperCase()
++    )
++  })
++
++  it('expects to return correct hexadecimal value for letters', () => {
++    expect(binaryToHex('101010111100110111101111')).toBe('ABCDEF')
++  })
++
++  it('expects to return correct hexadecimal value for numbers', () => {
++    expect(binaryToHex('1001000110100010101100111100010010000')).toBe(
++      '1234567890'
++    )
+   })
+ })
+```
+
+### 6.2 [`integralEvaluation`](../Maths/test/SimpsonIntegration.test.js)
+
+#### 6.2.1 Test cases added
+
+Add test cases that checks so that 0 is returned if the interval is 0 and tests that assures that the function throws an error if N is too small.
+
+#### 6.2.2 Git diff
+
+```sh
+git diff original-state Maths/test/SimpsonIntegration.test.js
+```
+
+```diff
+diff --git a/Maths/test/SimpsonIntegration.test.js b/Maths/test/SimpsonIntegration.test.js
+index c5ebf6a..6041b22 100644
+--- a/Maths/test/SimpsonIntegration.test.js
++++ b/Maths/test/SimpsonIntegration.test.js
+@@ -14,3 +14,15 @@ test('Should return the integral of f(x) = log(x) + Pi*x^3 in [5, 12] to be equa
+   const result = integralEvaluation(128, 5, 12, (x) => { return Math.log(x) + Math.PI * Math.pow(x, 3) })
+   expect(Number(result.toPrecision(12))).toBe(15809.9141543)
+ })
++
++test('Should return 0 since the interval is between the same numbers', () => {
++  const result = integralEvaluation(128, 5, 5, (x) => { return Math.log(x) + Math.PI * Math.pow(x, 3) })
++  expect(Number(result)).toBe(0)
++})
++
++test('Should return a error since N is too small', () => {
++  expect(() => {
++    const result = integralEvaluation(0, 5, 5, (x) => { return Math.log(x) + Math.PI * Math.pow(x, 3) })
++    Number(result)
++  }).toThrow('N has to be >= 2')
++})
+```
+
+### 6.3 [`maxProductOfThree`](../Dynamic-Programming/tests/MaxProductOfThree.test.js)
+
+#### 6.3.1 Test cases added
+
+Add testcases that make sure that the order the elements are in doesn't matter.
+
+#### 6.3.1 Git diff
+
+```sh
+git diff original-state Dynamic-Programming/tests/MaxProductOfThree.test.js
+```
+
+```diff
+diff --git a/Dynamic-Programming/tests/MaxProductOfThree.test.js b/Dynamic-Programming/tests/MaxProductOfThree.test.js
+index 32aaec5..ba031eb 100644
+--- a/Dynamic-Programming/tests/MaxProductOfThree.test.js
++++ b/Dynamic-Programming/tests/MaxProductOfThree.test.js
+@@ -14,4 +14,13 @@ describe('MaxProductOfThree', () => {
+   it('expects to return 300 as the maximum product', () => {
+     expect(maxProductOfThree([10, -6, 5, 3, 1, -10])).toBe(600)
+   })
++
++  // max product works no matter the order
++  it('expects to return 24 as the maximum product', () => {
++    expect(maxProductOfThree([-1, 2, 3, 4])).toBe(24)
++  })
++
++  it('expects to return 24 as the maximum product', () => {
++    expect(maxProductOfThree([-1, 4, 3, 2])).toBe(24)
++  })
+ })
+```
+
+### 6.4 [`flashSort`](../Sorts/test/FlashSort.test.js)
+
+#### 6.4.1 Test cases added
+
+Add test cases that the function doesn't fail if the array only contains 0 as well as a test that ensures that FlashSort sorts from smallest to largest.
+
+#### 6.4.2 Git diff
+
+```sh
+git diff original-state Sorts/test/FlashSort.test.js
+```
+
+```diff
+diff --git a/Sorts/test/FlashSort.test.js b/Sorts/test/FlashSort.test.js
+index 7fd24cc..dff40b5 100644
+--- a/Sorts/test/FlashSort.test.js
++++ b/Sorts/test/FlashSort.test.js
+@@ -23,3 +23,15 @@ test('The flash sort of the array [-3, 0, -2, -5, -1, -4, -1, -2] is [-5, -4, -3
+   const res = flashSort(array)
+   expect(res).toEqual([-5, -4, -3, -2, -2, -1, -1, 0])
+ })
++
++test('The flash sort of the array [0] is [0]', () => {
++  const array = [0]
++  const res = flashSort(array)
++  expect(res).toEqual([0])
++})
++
++test('The flash sort of the array ...', () => {
++  const array = [-9999, 9999]
++  const res = flashSort(array)
++  expect(res).toEqual([-9999, 9999])
++})
+```
+
+### 6.5 [`caesarCipherEncodeAndDecodeEngine`](../Ciphers/test/KeyFinder.test.js)
+
+#### 6.5.1 Test cases added
+
+Add test cases for testing if the function can decode valid and invalid input.
+
+#### 6.5.2 Git diff
+
+```sh
+git diff original-state Ciphers/test/KeyFinder.test.js
+```
+
+```diff
+diff --git a/Ciphers/test/KeyFinder.test.js b/Ciphers/test/KeyFinder.test.js
+new file mode 100644
+index 0000000..bed5e29
+--- /dev/null
++++ b/Ciphers/test/KeyFinder.test.js
+@@ -0,0 +1,20 @@
++import { keyFinder } from '../KeyFinder.js'
++
++describe('Testing keyFinder function', () => {
++  it('Test - 1, Testing for invalid types', () => {
++    expect(() => keyFinder(-1)).toThrow()
++  })
++
++  it('Test - 2, Testing for encrypted input', () => {
++    // expect(keyFinder("Rfkkjwi, oekh xcdktgizoutz, tge zqyv.")).toBe(20)
++    expect(keyFinder('L fdph, L vdz, L frqtxhuhg.')).toBe(23)
++    expect(keyFinder('Lzwespj pfl zljyla pz uvwlxlyepl.')).toBe(19)
++    expect(keyFinder('Oy zmk zmciaxu kgixz.')).toBe(20)
++  })
++
++  it('Test - 3, Testing for random input', () => {
++    // expect(keyFinder("Rfkkjwi, oekh xcdktgizoutz, tge zqyv.")).toBe(20)
++    expect(keyFinder('aaaa')).toBe(0)
++    expect(keyFinder('bcde')).toBe(0)
++  })
++})
+```
 
 ## 7 Self-assessment: Way of working
 
